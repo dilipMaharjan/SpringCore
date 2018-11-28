@@ -1,18 +1,20 @@
 package com.core.spring.app;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class App {
+public class AppConfigWithJava {
+
 	public static void main(String[] args) {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-		Coach bcoach = context.getBean("baseball", Coach.class);
+		Coach bcoach = context.getBean("baseBallCoach", Coach.class);
 		System.out.println(bcoach.getDailyWorkOut());
 		System.out.println(bcoach.getDailyFortune());
 
 		Coach tcoach = context.getBean("track", Coach.class);
 		System.out.println(tcoach.getDailyWorkOut());
-		System.out.println(bcoach.getDailyFortune());
+		System.out.println(tcoach.getDailyFortune());
+		
 
 		CricketCoach ccoach = context.getBean("cricket", CricketCoach.class);
 		System.out.println(ccoach.getDailyWorkOut());
@@ -21,5 +23,7 @@ public class App {
 		System.out.println(ccoach.getEmailAddress());
 
 		context.close();
+
 	}
+
 }

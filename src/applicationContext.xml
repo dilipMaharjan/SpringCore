@@ -7,8 +7,28 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="coach" class="com.core.spring.app.BaseBallCoach">
+	<!-- load properties file -->
+	<context:property-placeholder
+		location="classpath:sport.properties" />
+
+	<!-- if scope is not defined, then it is singleton -->
+	<bean id="fortuneService"
+		class="com.core.spring.app.HappyFortuneService" scope="singleton" />
+
+	<!-- constructor injection -->
+	<bean id="baseball" class="com.core.spring.app.BaseBallCoach">
+		<constructor-arg ref="fortuneService" />
+	</bean>
+	<bean id="track" class="com.core.spring.app.TrackCoach"
+		init-method="init" destroy-method="destroy">
+		<constructor-arg ref="fortuneService" />
 	</bean>
 
+	<!-- setter injection reading, value from properties file -->
+	<bean id="cricket" class="com.core.spring.app.CricketCoach">
+		<property name="fortuneService" ref="fortuneService" />
+		<property name="team" value="${team}" />
+		<property name="emailAddress" value="${email}" />
+	</bean>
 
 </beans>
